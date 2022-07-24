@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import Review from './Review'
 
 function App() {
+  const [people ,setPeople] = useState([]);
+
+  useEffect(()=>{
+    fetch("data.json")
+      .then((res) => res.json())
+      .then((data) => setPeople(data));
+      
+  },[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section className="container" style={{margin:'0 auto'}}>
+      <h2 style={{textAlign:'center'}}>total Revirewer : {people.length}</h2>
+      <div className="title">
+        <h2>our reviews</h2>
+        <div className="underline"></div>
+      </div>
+     
+      {
+        people.slice(0,1).map((person)=><Review key={person.id} people={people}></Review>)
+      }
+    </section>
   );
 }
 
